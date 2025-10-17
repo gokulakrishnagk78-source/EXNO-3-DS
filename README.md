@@ -31,8 +31,51 @@ We use this categorical data encoding technique when the features are nominal(do
 • Yeojohnson method
 
 # CODING AND OUTPUT:
-       # INCLUDE YOUR CODING AND OUTPUT SCREENSHOTS HERE
-# RESULT:
-       # INCLUDE YOUR RESULT HERE
+```
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import PowerTransformer
 
+
+df = pd.read_csv("C:\\Users\\krishna\\Downloads\\Encoding Data.csv")
+
+
+df.drop_duplicates(inplace=True)           
+df.dropna(inplace=True)                    
+
+
+
+df['bin_1'] = df['bin_1'].map({'F': 0, 'T': 1})
+df['bin_2'] = df['bin_2'].map({'N': 0, 'Y': 1})
+
+
+df = pd.get_dummies(df, columns=['nom_0'])
+
+
+ord_map = {'Cold': 0, 'Warm': 1, 'Hot': 2}
+df['ord_2'] = df['ord_2'].map(ord_map)
+
+
+df['ord_2_log'] = np.log1p(df['ord_2'])
+
+
+df['ord_2_sqrt'] = np.sqrt(df['ord_2'])
+
+
+pt = PowerTransformer(method='yeo-johnson')
+df['ord_2_yeo'] = pt.fit_transform(df[['ord_2']])
+
+
+df.to_csv("Cleaned_Data_set.csv", index=False)
+print("Data cleaning, encoding, transformation complete. Saved as 'Cleaned_Data_set.csv'.")
+```
+#OUTPUT :
+![Screenshot_17-10-2025_11319_localhost](https://github.com/user-attachments/assets/a1c0995f-ed11-4dc7-a68f-5f2332c3dcd8)
+![Screenshot_17-10-2025_11231_localhost](https://github.com/user-attachments/assets/3622f967-3fee-4490-80b6-f7b66b871eb9)
+
+
+
+# RESULT:
+       
+given data set is cleaned ,encoded and transformed successfully.
        
